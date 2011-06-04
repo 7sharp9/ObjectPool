@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ObjectPool", "ObjectPool\ObjectPool.fsproj", "{5415BF89-96BA-4392-A531-776B18126CCD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5415BF89-96BA-4392-A531-776B18126CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5415BF89-96BA-4392-A531-776B18126CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5415BF89-96BA-4392-A531-776B18126CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5415BF89-96BA-4392-A531-776B18126CCD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
