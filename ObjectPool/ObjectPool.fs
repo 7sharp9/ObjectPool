@@ -1,7 +1,7 @@
 ﻿module Poc
 open System.Collections.Concurrent
 
-//Agent alias for mb processor
+//Agent alias for MailboxProcessor
 type Agent<'T> = MailboxProcessor<'T>
 
 ///One of three messages for our Object Pool agent
