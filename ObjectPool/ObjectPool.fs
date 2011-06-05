@@ -1,5 +1,4 @@
 ﻿module Poc
-open System.Collections.Concurrent
 
 //Agent alias for MailboxProcessor
 type Agent<'T> = MailboxProcessor<'T>
