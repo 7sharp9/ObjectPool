@@ -11,28 +11,26 @@ type PoolMessage<'a> =
 
 /// Object pool representing a reusable pool of objects
 type ObjectPool<'a>(generate: unit -> 'a, initialPoolCount) = 
-    let pool = List.init initialPoolCount (fun (x) -> generate()) |> ref
+    let initial = List.init initialPoolCount (fun (x) -> generate())
     let agent = Agent.Start(fun inbox ->
         let rec loop(x) = async {
             let! msg = inbox.Receive()
             match msg with
             | Get(reply) -> 
-                match !pool with
-                | a :: b -> 
-                    pool:= b
-                    reply.Reply(a)
-                | [] -> reply.Reply(generate())
-                return! loop(x-1)
+                let res = match x with
+                          | a :: b -> 
+                              reply.Reply(a);b
+                          | [] as empty-> 
+                              reply.Reply(generate());empty
+                return! loop(res)
             | Put(value, reply)-> 
-                pool:=  value :: !pool
                 reply.Reply()
-                return! loop(x+1) 
+                return! loop(value :: x) 
             | Clear(reply) -> 
-                reply.Reply(!pool)
-                pool := List.empty<'a> 
-                return! loop(0)            
+                reply.Reply(x)
+                return! loop(List.empty<'a> )            
         }
-        loop(0))
+        loop(initial))
 
     /// Clears the object pool, returning all of the data that was in the pool.
     member this.ToListAndClear() = 
