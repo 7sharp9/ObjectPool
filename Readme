@@ -1,9 +1,9 @@
 This is a simple implementation of an object pool using an agent (MailboxProcessor).
 
-The pool is created with an initial number of object using the specified generator.
+The pool is created with an initial number of objects using the specified generator.
 
-The ObjectPool has three function:
+The ObjectPool has three functions:
 
 Put: An item can be 'Put' into the pool.
-Get: An item can be taken from the pool using 'Get'
-ToListAndClear: A list of all the item in the pool is returned and the pool is cleared.
+Get: An item can be taken from the pool.
+ToListAndClear: A list of all the items in the pool is returned and the pool is cleared.
