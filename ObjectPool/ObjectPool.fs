@@ -27,16 +27,17 @@ type ObjectPool<'a>(generate: unit -> 'a, initialPoolCount) =
                 return! loop(value :: x) 
             | Clear(reply) -> 
                 reply.Reply(x)
-                return! loop(List.empty<'a> )            
-        }
+                return! loop(List.empty<'a>) }
         loop(initial))
 
     /// Clears the object pool, returning all of the data that was in the pool.
     member this.ToListAndClear() = 
         agent.PostAndAsyncReply(Clear)
+
     /// Puts an item into the pool
-    member this.Put(item) = 
-        agent.PostAndAsyncReply((fun ch -> Put(item)))
+    member this.Put(item ) = 
+        agent.Post(item)
+
     /// Gets an item from the pool or if there are none present use the generator
     member this.Get(item) = 
         agent.PostAndAsyncReply(Get)
