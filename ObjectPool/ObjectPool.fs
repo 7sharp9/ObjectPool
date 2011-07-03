@@ -6,7 +6,7 @@ type Agent<'T> = MailboxProcessor<'T>
 ///One of three messages for our Object Pool agent
 type PoolMessage<'a> =
     | Get of AsyncReplyChannel<'a>
-    | Put of 'a * AsyncReplyChannel<unit>
+    | Put of 'a
     | Clear of AsyncReplyChannel<List<'a>>
 
 /// Object pool representing a reusable pool of objects
@@ -23,8 +23,7 @@ type ObjectPool<'a>(generate: unit -> 'a, initialPoolCount) =
                           | [] as empty-> 
                               reply.Reply(generate());empty
                 return! loop(res)
-            | Put(value, reply)-> 
-                reply.Reply()
+            | Put(value)-> 
                 return! loop(value :: x) 
             | Clear(reply) -> 
                 reply.Reply(x)
@@ -37,7 +36,7 @@ type ObjectPool<'a>(generate: unit -> 'a, initialPoolCount) =
         agent.PostAndAsyncReply(Clear)
     /// Puts an item into the pool
     member this.Put(item) = 
-        agent.PostAndAsyncReply((fun ch -> Put(item, ch)))
+        agent.PostAndAsyncReply((fun ch -> Put(item)))
     /// Gets an item from the pool or if there are none present use the generator
     member this.Get(item) = 
         agent.PostAndAsyncReply(Get)
